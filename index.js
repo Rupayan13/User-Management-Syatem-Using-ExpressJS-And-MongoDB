@@ -20,25 +20,21 @@ const userSchema = {
 
 const User = mongoose.model("User", userSchema);
 
-app.get("/", (req, res) => {
-    async function showUser() {
+app.get("/", async (req, res) => {
         try {
           const usersAll = await User.find({});
           res.render(__dirname + "/view/index.ejs", { newUserList: usersAll });
         } catch (err) {
           console.log(err);
         }
-    };
-    showUser();
 });
 
 app.get("/add_user", (req, res) => {
   res.render(__dirname + "/view/add_user.ejs");
 });
 
-app.get("/edit_user/:id", (req, res)=>{
+app.get("/edit_user/:id", async (req, res)=>{
     const userId = req.params.id;
-    async function findUser() {
         try {
           const userFind = await User.findOne({_id: userId});
           res.render(__dirname + "/view/add_user.ejs", 
@@ -50,11 +46,9 @@ app.get("/edit_user/:id", (req, res)=>{
         } catch (err) {
           console.log(err);
         }
-    };
-    findUser();
-})
+});
 
-app.post("/submit", (req, res)=>{
+app.post("/submit", async (req, res)=>{
     const name = req.body.name;
     const email = req.body.email;
     const newUser=new User({
@@ -65,11 +59,10 @@ app.post("/submit", (req, res)=>{
     res.redirect("/");
 });
 
-app.post("/edit/:id", (req, res)=>{
+app.post("/edit/:id", async (req, res)=>{
     const userId = req.params.id;
     const newName = req.body.name;
     const newEmail = req.body.email;
-    async function findUserAndUpdate() {
         try {
           const userFind = await User.updateOne({_id: userId}, {$set: {name: newName, email: newEmail}});
           console.log(userFind);
@@ -77,13 +70,10 @@ app.post("/edit/:id", (req, res)=>{
         } catch (err) {
           console.log(err);
         }
-    };
-    findUserAndUpdate();
 });
 
-app.get("/delete/:id", (req, res)=>{
+app.get("/delete/:id", async (req, res)=>{
     const userId = req.params.id;
-    async function deleteUser() {
         try {
           const userDelete = await User.deleteOne({_id: userId});
           console.log(userDelete);
@@ -91,9 +81,7 @@ app.get("/delete/:id", (req, res)=>{
         } catch (err) {
           console.log(err);
         }
-    };
-    deleteUser();
-})
+});
 
 app.listen(port, () => {
   console.log(`Server is running on ${port}`);
