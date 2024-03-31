@@ -2,7 +2,7 @@
     <% if(locals.id && locals.name && locals.email){ %>
         <div class="container">
             <h2>Edit User</h2>
-            <form action="/edit/<%= id %>" method="POST">
+            <form action="/edit/<%= id %>" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" value="<%= name %>" required>
@@ -12,6 +12,12 @@
                     <input type="email" id="email" name="email" value="<%= email %>" required>
                 </div>
                 <div class="form-group">
+                    <label for="file">Reuplaod Your Image:</label>
+                    <div class="input-group mb-3">
+                        <input type="file" name="image" class="form-control" id="inputGroupFile02">
+                    </div>
+                </div>
+                <div class="form-group">
                     <input type="submit" name="submit" value="Submit" class="btn-user">
                 </div>
             </form>
@@ -19,7 +25,7 @@
     <% }else{ %>
     <div class="container">
         <h2>Add User</h2>
-        <form action="/submit" method="POST">
+        <form action="/submit" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
@@ -28,6 +34,12 @@
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
+        <div class="form-group">
+            <label for="file">Uplaod Your Image:</label>
+            <div class="input-group mb-3">
+                <input type="file" name="image" class="form-control" id="inputGroupFile02">
+            </div>
+        </div>
             <div class="form-group">
                 <input type="submit" name="submit" value="Submit" class="btn-user">
             </div>

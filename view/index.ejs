@@ -11,6 +11,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Image</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th colspan="2">Actions</th>
@@ -20,6 +21,7 @@
             <tbody>
                 <!-- User data will be dynamically populated here -->
                     <td><%= user._id %></td>
+                    <td><img width="100" src="images/<%= user.image %>" alt="Photo of <%= user.name %>"></td>
                     <td><%= user.name %></td>
                     <td><%= user.email %></td>
                     <td><button type="button" class="btn btn-success"><a href="./edit_user/<%= user._id %>">Edit</a></button></td>
