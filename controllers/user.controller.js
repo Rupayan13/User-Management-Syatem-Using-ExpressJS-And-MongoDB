@@ -6,14 +6,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const viewAllUsers = async (req, res) => {
     try {
       const usersAll = await User.find({});
-      res.render(__dirname + "/../view/index.ejs", { newUserList: usersAll });
+      res.render(__dirname + "/../view/index.ejs", { newUserList: usersAll, user: req.user});
     } catch (err) {
       console.log(err);
     }
 };
 
 const viewUserForm = (req, res) => {
-    res.render(__dirname + "/../view/add_user.ejs");
+    res.render(__dirname + "/../view/add_user.ejs", {user: req.user});
 };
 
 const viewUserById = async (req, res)=>{
@@ -25,7 +25,8 @@ const viewUserById = async (req, res)=>{
             id: userId,
             name: userFind.name,
             email: userFind.email,
-            image: userFind.image
+            image: userFind.image,
+            user: req.user
           });
         } catch (err) {
           console.log(err);

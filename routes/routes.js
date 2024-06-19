@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import multer from "multer";
 import {viewAllUsers, viewUserForm, viewUserById, insertUser, editUserById, deleteUserById} from "../controllers/user.controller.js";
-
+import {authRouter, checkAuthenticated, checkNotAuthenticated} from "./auth.route.js";
 const router = express.Router();
 
 router.use(express.static("public"));
@@ -20,16 +20,16 @@ const upload = multer({
   storage: storage
 });
 
-router.get("/", viewAllUsers);
+router.get("/", checkAuthenticated, viewAllUsers);
 
-router.get("/add_user", viewUserForm);
+router.get("/add_user", checkAuthenticated, viewUserForm);
 
-router.get("/edit_user/:id", viewUserById);
+router.get("/edit_user/:id", checkNotAuthenticated, viewUserById);
 
-router.post("/submit", upload.single("image"), insertUser);
+router.post("/submit", upload.single("image"), checkNotAuthenticated, insertUser);
 
-router.post("/edit/:id", upload.single("image"), editUserById);
+router.post("/edit/:id", upload.single("image"), checkNotAuthenticated, editUserById);
 
-router.get("/delete/:id", deleteUserById);
+router.get("/delete/:id", checkNotAuthenticated, deleteUserById);
 
 export {router};
